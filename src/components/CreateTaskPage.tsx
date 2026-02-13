@@ -1,12 +1,14 @@
-import {type ChangeEvent, type SubmitEvent, useState} from "react";
-import useCreateTask from "../hooks/useCreateTask.ts";
-import type {CreateTaskRequest} from "../types/task.ts";
+import { type ChangeEvent, type SubmitEvent, useState } from 'react';
+
+import type { CreateTaskRequest } from '../types/task.ts';
+
+import useCreateTask from '../hooks/useCreateTask.ts';
 
 const CreateTaskPage = () => {
   const { mutate: createTask } = useCreateTask();
 
   // STATES
-  const [formData, setFormData] = useState<CreateTaskRequest>({
+  const [ formData, setFormData ] = useState<CreateTaskRequest>({
     name: '',
   });
 
@@ -18,7 +20,7 @@ const CreateTaskPage = () => {
       ...prev,
       [name]: value,
     }));
-  }
+  };
 
   const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,10 +41,13 @@ const CreateTaskPage = () => {
       alert('Error al crear la tarea');
       throw error;
     }
-  }
+  };
 
   return (
-    <form onSubmit={ handleSubmit } data-testid='create-task-form'>
+    <form
+      data-testid='create-task-form'
+      onSubmit={ handleSubmit }
+    >
       <div>
         <label htmlFor='name'>
           Nombre
@@ -50,15 +55,17 @@ const CreateTaskPage = () => {
 
         <input
           id='name'
-          value={ formData.name }
           name='name'
           onChange={ handleFieldChange }
+          value={ formData.name }
         />
       </div>
 
-      <button aria-label='Botón crear tarea'>Crear</button>
+      <button aria-label='Botón crear tarea'>
+        Crear
+      </button>
     </form>
   );
-}
+};
 
 export default CreateTaskPage;

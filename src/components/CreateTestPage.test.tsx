@@ -1,8 +1,7 @@
+import { fireEvent, render, screen, waitFor, } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
-import CreateTaskPage from "./CreateTaskPage.tsx";
-import {fireEvent, render, screen, waitFor, } from "@testing-library/react";
 
-
+import CreateTaskPage from './CreateTaskPage.tsx';
 
 describe('Crear tarea', () => {
   test('debe incluirse "name"', async () => {
@@ -23,7 +22,7 @@ describe('Crear tarea', () => {
     const form = screen.getByTestId('create-task-form');
     const nameInput = screen.getByLabelText('Nombre');
 
-    fireEvent.change(nameInput, { target: { value: 'Tarea de prueba' }});
+    fireEvent.change(nameInput, { target: { value: 'Tarea de prueba' } });
     fireEvent.submit(form);
 
     await waitFor(() => {
@@ -39,7 +38,7 @@ describe('Crear tarea', () => {
     const nameInput = screen.getByLabelText('Nombre');
     const createTaskButton = screen.getByLabelText('Botón crear tarea');
 
-    fireEvent.change(nameInput, { target: { value: 'Nueva tarea' }});
+    fireEvent.change(nameInput, { target: { value: 'Nueva tarea' } });
     fireEvent.click(createTaskButton);
 
     expect(nameInput).toBeInTheDocument();

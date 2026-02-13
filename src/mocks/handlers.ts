@@ -1,5 +1,6 @@
-import {http, HttpResponse} from "msw";
-import type {CreateTaskRequest} from "../types/task.ts";
+import { http, HttpResponse } from 'msw';
+
+import type { CreateTaskRequest } from '../types/task.ts';
 
 const tasks = [];
 
