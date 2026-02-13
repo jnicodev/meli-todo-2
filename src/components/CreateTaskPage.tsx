@@ -41,10 +41,10 @@ const CreateTaskPage = () => {
     <form onSubmit={ handleSubmit }>
       <div>
         <label>Nombre</label>
-        <input name='name' onChange={ handleFieldChange } />
+        <input aria-label='Nombre de la tarea' name='name' onChange={ handleFieldChange } />
       </div>
 
-      <button>Crear</button>
+      <button aria-label='Botón crear tarea'>Crear</button>
     </form>
   );
 }
