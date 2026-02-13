@@ -30,6 +30,10 @@ const CreateTaskPage = () => {
     try {
       await createTask(formData);
 
+      setFormData({
+        name: '',
+      });
+
       alert('Tarea creada');
     } catch (error: unknown) {
       alert('Error al crear la tarea');
@@ -38,10 +42,18 @@ const CreateTaskPage = () => {
   }
 
   return (
-    <form onSubmit={ handleSubmit }>
+    <form onSubmit={ handleSubmit } data-testid='create-task-form'>
       <div>
-        <label>Nombre</label>
-        <input aria-label='Nombre de la tarea' name='name' onChange={ handleFieldChange } />
+        <label htmlFor='name'>
+          Nombre
+        </label>
+
+        <input
+          id='name'
+          value={ formData.name }
+          name='name'
+          onChange={ handleFieldChange }
+        />
       </div>
 
       <button aria-label='Botón crear tarea'>Crear</button>

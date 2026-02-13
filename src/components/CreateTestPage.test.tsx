@@ -17,12 +17,26 @@ describe('Crear tarea', () => {
     });
   });
 
+  test('los campos del formulario se limpian después de crear la tarea', async () => {
+    render(<CreateTaskPage />);
+
+    const form = screen.getByTestId('create-task-form');
+    const nameInput = screen.getByLabelText('Nombre');
+
+    fireEvent.change(nameInput, { target: { value: 'Tarea de prueba' }});
+    fireEvent.submit(form);
+
+    await waitFor(() => {
+      expect(nameInput).toHaveValue('');
+    });
+  });
+
   test('puede crear una tarea cuando todos los campos son válidos', async () => {
     const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
     render(<CreateTaskPage />);
 
-    const nameInput = screen.getByLabelText('Nombre de la tarea');
+    const nameInput = screen.getByLabelText('Nombre');
     const createTaskButton = screen.getByLabelText('Botón crear tarea');
 
     fireEvent.change(nameInput, { target: { value: 'Nueva tarea' }});
