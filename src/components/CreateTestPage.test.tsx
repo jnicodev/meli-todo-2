@@ -1,32 +1,70 @@
 import { fireEvent, render, screen, waitFor, } from '@testing-library/react';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import CreateTaskPage from './CreateTaskPage.tsx';
 
 describe('Crear tarea', () => {
-  test('debe incluirse "name"', async () => {
-    const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+  describe('Nombre', () => {
+    beforeEach(() => {
+      render(<CreateTaskPage />);
+    });
 
-    render(<CreateTaskPage />);
+    test('debe renderizarse en el estado inicial del formulario', () => {
+      const nameInput = screen.getByRole('textbox', { name: 'Nombre' });
+      expect(nameInput).toBeInTheDocument();
+    });
 
-    screen.getByLabelText('Botón crear tarea').click();
+    test('debe estar referenciado por un label', () => {
+      const nameInput = screen.getByRole('textbox', { name: 'Nombre' });
+      expect(nameInput).toBeInTheDocument();
+    });
 
-    await waitFor(() => {
-      expect(alertSpy).toHaveBeenCalledWith('Ingresa el nombre');
+    test('debe iniciar vacío', () => {
+      const nameInput = screen.getByRole('textbox', { name: 'Nombre' });
+      expect(nameInput).not.toHaveValue();
+    });
+
+    test('debe incluirse al enviar el formulario', async () => {
+      const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+      const createTaskForm = screen.getByRole('form', { name: 'Formulario crear tarea' }); ;
+
+      fireEvent.submit(createTaskForm);
+
+      await waitFor(() => {
+        expect(alertSpy).toHaveBeenCalledWith('Ingresa el nombre');
+      });
+    });
+
+    test('debe reiniciarse al enviar el formulario', async () => {
+      const createTaskForm = screen.getByRole('form', { name: 'Formulario crear tarea' }); ;
+      const nameInput = screen.getByRole('textbox', { name: 'Nombre' });
+
+      fireEvent.change(nameInput, { target: { value: 'Tarea de prueba' } });
+      fireEvent.submit(createTaskForm);
+
+      await waitFor(() => {
+        expect(nameInput).not.toHaveValue();
+      });
     });
   });
 
-  test('los campos del formulario se limpian después de crear la tarea', async () => {
-    render(<CreateTaskPage />);
+  describe('Botón crear', () => {
+    beforeEach(() => {
+      render(<CreateTaskPage />);
+    });
 
-    const form = screen.getByTestId('create-task-form');
-    const nameInput = screen.getByLabelText('Nombre');
+    test('debe renderizarse en el estado inicial del formulario', () => {
+      const button = screen.getByRole('button', { name: 'Crear' });
+      expect(button).toBeInTheDocument();
+    });
 
-    fireEvent.change(nameInput, { target: { value: 'Tarea de prueba' } });
-    fireEvent.submit(form);
+    test('debe enviar el formulario al ser pulsado', () => {
+      const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+      const button = screen.getByRole('button', { name: 'Crear' });
 
-    await waitFor(() => {
-      expect(nameInput).toHaveValue('');
+      fireEvent.click(button);
+
+      expect(alertSpy).toHaveBeenCalled();
     });
   });
 
@@ -35,15 +73,11 @@ describe('Crear tarea', () => {
 
     render(<CreateTaskPage />);
 
-    const nameInput = screen.getByLabelText('Nombre');
-    const createTaskButton = screen.getByLabelText('Botón crear tarea');
+    const nameInput = screen.getByRole('textbox', { name: 'Nombre' });
+    const createTaskButton = screen.getByRole('button', { name: 'Crear' });
 
     fireEvent.change(nameInput, { target: { value: 'Nueva tarea' } });
     fireEvent.click(createTaskButton);
-
-    expect(nameInput).toBeInTheDocument();
-    expect(nameInput).toHaveValue('Nueva tarea');
-    expect(createTaskButton).toBeInTheDocument();
 
     await waitFor(() => {
       expect(alertSpy).toHaveBeenCalledWith('Tarea creada');

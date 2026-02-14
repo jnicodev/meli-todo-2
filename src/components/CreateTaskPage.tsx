@@ -45,7 +45,7 @@ const CreateTaskPage = () => {
 
   return (
     <form
-      data-testid='create-task-form'
+      aria-label='Formulario crear tarea'
       onSubmit={ handleSubmit }
     >
       <div>
@@ -61,7 +61,7 @@ const CreateTaskPage = () => {
         />
       </div>
 
-      <button aria-label='Botón crear tarea'>
+      <button>
         Crear
       </button>
     </form>
