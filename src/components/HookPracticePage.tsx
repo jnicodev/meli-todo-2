@@ -1,4 +1,4 @@
-import useClampedCounter from '../hooks/practice/useCampledCounter.ts';
+import useClampedCounter from '../hooks/practice/useClampedCounter.ts';
 import useToggle from '../hooks/practice/useToggle.ts';
 
 const HookPracticePage = () => {
