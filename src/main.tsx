@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 
 import App from './App.tsx';
 import CreateTaskPage from './components/CreateTaskPage.tsx';
+import HookPracticePage from './components/HookPracticePage.tsx';
 
 const initWorker = async () => {
   const { worker } = await import('./mocks/browser.ts');
@@ -18,6 +19,11 @@ initWorker().then(() => createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route path='/'>
+          <Route
+            element={ <HookPracticePage /> }
+            path='hook-practice'
+          />
+
           <Route path='tasks'>
             <Route
               element={ <CreateTaskPage /> }
