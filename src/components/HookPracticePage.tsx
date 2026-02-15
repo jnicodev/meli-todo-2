@@ -1,7 +1,9 @@
 import useClampedCounter from '../hooks/practice/useClampedCounter.ts';
 import useToggle from '../hooks/practice/useToggle.ts';
+import PreviousValue from './molecules/PreviousValue.tsx';
 
 const HookPracticePage = () => {
+  const randomNumber = Math.floor(Math.random() * 50);
   const { setFalse: setToggleFalse, setTrue: setToggleTrue, toggle, value: toggleValue } = useToggle();
   const { decrement: decrementClampedCounter, increment: incrementClampedCounter, value: clampedCounter } = useClampedCounter(5, 0, 10);
 
@@ -46,6 +48,8 @@ const HookPracticePage = () => {
           +
         </button>
       </div>
+
+      <PreviousValue nextValue={ randomNumber } />
     </>
   );
 };

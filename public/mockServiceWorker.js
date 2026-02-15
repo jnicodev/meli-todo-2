@@ -320,7 +320,7 @@ function respondWithMock(response) {
   const mockedResponse = new Response(response.body, response)
 
   Reflect.defineProperty(mockedResponse, IS_MOCKED_RESPONSE, {
-    value: true,
+    currentValue: true,
     enumerable: true,
   })
 
